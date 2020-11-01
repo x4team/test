@@ -1,4 +1,4 @@
-Создаем КЛАСТЕР NextCloudD на Docker Swarm (Debian Linux)
+Создаем КЛАСТЕР NextCloud на Docker Swarm (Debian Linux)
 ==============================
 
 ![Кластер на Docker Swarm](https://miro.medium.com/max/653/1*A7hv9CX6Su-5SBR3WB0SDA.png "Докер Swarm")
@@ -19,17 +19,23 @@ apt install wget git nano vim htop apt-transport-https \
 ca-certificates curl gnupg2 gnupg-agent software-properties-common ufw sudo -y
 ``` 
 
-**0.3)  Добавим нашего пользователя(заменить на своего) в группу ```sudo:```**
-
+**0.3)  Добавим нашего пользователя в группу ```sudo```(заменить на своего):**
 ```
-usermod -aG sudo nameuser && \
 cp /etc/sudoers /etc/sudoers.orginal && \
 chmod  0440  /etc/sudoers && \
 service sshd restart
 ```
+```
+usermod -aG sudo nameuser
+```
 **0.4) Выйдем и перелогинимся по ssh в систему под нашим пользователем:**
 ```
-exit && exit
+exit
+```
+```
+exit
+```
+```
 ssh user@your_ip
 ```
 
@@ -43,8 +49,7 @@ sudo localedef -i en_US -f UTF-8 en_US.UTF-8
 **0.6) Добавим ключ репозитория Docker и сам репозиторий:**
 
 ```
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg \ 
-| apt-key add - 
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - 
 ```
 
 ```
@@ -75,6 +80,8 @@ sudo ufw allow 2377/tcp && sudo ufw allow 4789/udp
 ```
 sudo service sshd restart && sudo ufw allow 22/tcp && \
 sudo systemctl restart docker
+```
+```
 sudo ufw enable && sudo ufw reload
 ```
 
@@ -322,6 +329,7 @@ vim docker-compose.yml
 ```
 * **Добавим кода. Не забудь заменить ```NEXTCLOUD_TRUSTED_DOMAINS``` на свое) \
  и другие данные (пароли,пользователи):**
+ * **ОБЪЯСНИТЬ КОНФИГ**
 
 ```
 version: '3.8'
